@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEAM GENERATOR</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <h1>TEAM GENERATOR</h1>
+    <div id="mainContainer">
+      <div id="leftrow">
+        <div id="lefttop">
+          <div id="addmember">
+            <h3>Add Member</h3>
+            <div id="inputDiv">
+              <input id="inputPH" type="text" placeholder="Name" />
+              <button class="btn blue" id="addBtn" onclick="addNewName()">
+                Add
+              </button>
+            </div>
+          </div>
+          <div id="addteam">
+            <h3>Teams</h3>
+            <div id="teaminput">
+              <button class="btn blue">-</button>
+              <span>
+                <input type="number" id="teamsValue" placeholder="1" disabled
+              /></span>
+              <button class="btn blue" onclick="addCard()">+</button>
+            </div>
+          </div>
+        </div>
+        <div id="leftbottom">
+          <div id="members"></div>
+          <div id="bottomButtons">
+            <button class="btn blue" id="assBtn">Assign Member</button>
+            <button class="btn red" id="resBtn" onclick="resetNames()">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="rightrow">
+        <div class="team">
+          <h2>Team 1</h2>
+          <div class="teammembers">
+            <p>team member</p>
+            <p>team member</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let waitList = [];
+
+      const addBtn = document.getElementById("addBtn");
+      const NameInput = document.getElementById("inputPH");
+      const allNamesBox = document.getElementById("members");
+      const resetBtn = document.getElementById("resBtn");
+      const assignBtn = document.getElementById("assBtn");
+      const teamsValue = document.getElementById("teamsValue");
+
+      //adding new name to list array
+      function addNewName() {
+        const NameInput = document.getElementById("inputPH");
+        let newName = NameInput.value;
+
+        function addNameToArray() {
+          waitList.push(newName);
+        }
+        addNameToArray();
+
+        let addName = document.createElement("p");
+        addName.innerHTML = newName;
+        allNamesBox.appendChild(addName);
+        NameInput.value = "";
+      }
+
+      // reset button!!
+
+      function resetNames() {
+        allNamesBox.innerHTML = "";
+        NameInput.value = "";
+        teamsValue.value = "1";
+      }
+      //add new card
+      function addCard() {
+        let mainContainer = document.getElementById("rightrow");
+        let newDiv = document.createElement("div");
+        let newH = document.createElement("h2");
+
+        let mainD = mainContainer.appendChild(newDiv);
+        mainD.classList.add("team");
+
+        let heading = mainD.appendChild(newH);
+        let teamDiv = mainD.appendChild(newDiv);
+        teamDiv.classList.add("teammembers");
+      }
+
+      //split into smaller arrays of 3
+      function split(arr, teamSize) {
+        let splitArr = [];
+        for (let i = 0; i < arr.length; i += teamSize) {
+          const team = arr.slice(i, i + teamSize);
+          splitArr.push(team);
+        }
+        return splitArr;
+      }
+
+      //the waiting list shuffle
+
+      function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+      }
+
+      assignBtn.onclick = function () {
+        shuffle(waitingList);
+        split(waitingList, 3);
+      };
+    </script>
+  </body>
+</html>
